@@ -2,6 +2,7 @@
 calculate_score <- function(fileName){
 library(xlsx)
 # param_values <- read.xlsx2("param values for R program.xlsx",sheetName = "Sheet1")
+  fileName <- "variables for R program.xlsx"
 param_weights <- read.xlsx2(fileName, sheetName = "Sheet1")
 
 str(param_weights)
