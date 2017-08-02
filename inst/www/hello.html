@@ -17,8 +17,8 @@
         var myname = $("#namefield").val();
         
         //perform the request
-        var req = ocpu.rpc("hello", {
-          myname : myname
+        var req = ocpu.rpc("calculate_score", {
+          fileName : "variables for R program.xlsx"
         }, function(output){
           $("#output").text(output.message);
         });
