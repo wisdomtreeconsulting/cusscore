@@ -35,13 +35,13 @@
         });
       });
       
-     var fitscore = $("#output").val().split(",")[0];
-     $("#fit1").text(fitscore)
+     var fitscore = $("#output").val().split(",")[0]; alert("fit:"+fitscore);
+     $("#fit1").val(fitscore)
 	    
-     var healthscore = $("#output").val().split(",")[1];
+     var healthscore = $("#output").val().split(",")[1];alert("health:"+healthscore);
      $("#health1").text(healthscore)
 	    
-	var valuescore = $("#output").val().split(",")[2];
+	var valuescore = $("#output").val().split(",")[2];alert("value:"+valuescore);
      $("#value1").text(valuescore)
     });
     </script>
