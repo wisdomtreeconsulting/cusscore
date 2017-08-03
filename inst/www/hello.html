@@ -19,7 +19,7 @@
         var req = ocpu.rpc("calculate_score", {
           fileName : "variables for R program.xlsx"
         }, function(output){
-          var msg = message[0];
+          var msg = output.message[0];
           alert(msg.substring(1,msg.length-1));
          
          var obj = JSON.parse(newStr);
