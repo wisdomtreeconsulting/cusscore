@@ -34,9 +34,11 @@ value_score <- sum(param_weights[param_weights$Category=="VALUE",]$SCORE*
                    param_weights[param_weights$Category=="VALUE",]$Weight)
 
 success_score <- 0.1*fit_score+0.5*health_score + 0.4*value_score
-final_scores <- cbind(fit_score,health_score,value_score,success_score)
+final_scores <- data.frame(cbind(fit_score,health_score,value_score,success_score))
+library(jsonlite)
+                         
  list(
-    message = final_scores[1,]
+    message = toJSON(final_scores)
   )
 
 }
