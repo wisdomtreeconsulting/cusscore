@@ -20,10 +20,9 @@
           fileName : "variables for R program.xlsx"
         }, function(output){
           var msg = output.message[0];
-          alert(msg.substring(1,msg.length-1));
-         
-         var obj = JSON.parse(newStr);
-         $("#fit1").text(obj.fit_score);
+          var obj = JSON.parse(msg.substring(1,msg.length-1));
+          alert(obj.fit_score);
+          $("#fit1").text(obj.fit_score);
     
         });
         
