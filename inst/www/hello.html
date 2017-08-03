@@ -21,9 +21,9 @@
         }, function(output){
           var msg = output.message[0];
           var obj = JSON.parse(msg.substring(1,msg.length-1));
-          alert(obj.fit_score);
           $("#fit1").text(obj.fit_score);
-    
+          $("#health1").text(obj.health_score);
+          $("#value1").text(obj.value_score);
         });
         
         //if R returns an error, alert the error message
@@ -77,8 +77,8 @@
       <td id="health1"></td>
       <td id="value1"></td>
       <td id="success1"></td>
-      <td id="hinsight1"></td>
-      <td id="minsight1"></td>
+      <td id="hinsight1"> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></td>
+      <td id="minsight1"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></td>
       <td id="play1"></td>
     </tr><!-- Table Row -->
 
