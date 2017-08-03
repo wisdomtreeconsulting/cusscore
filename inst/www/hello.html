@@ -19,7 +19,6 @@
         var req = ocpu.rpc("calculate_score", {
           fileName : "variables for R program.xlsx"
         }, function(output){
-          alert("output block")
           $("#output").text(output.message);
     
         });
@@ -35,7 +34,8 @@
         });
       });
       
-   
+      var fitscore <- $("#output").text();
+      alert(fitscore);
     });
     </script>
     
@@ -45,12 +45,9 @@
     
   <body>
     <h1>Customer Score</h1>
+      <button id="submitbutton" type="button">Submit to server!</button>
     
-  
-    
-    <button id="submitbutton" type="button">Submit to server!</button>
-    
-    <p id="output"></p>
+        <p id="output"></p>
   
     <table cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
 
