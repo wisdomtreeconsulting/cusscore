@@ -21,8 +21,8 @@
         var req = ocpu.rpc("calculate_score", {
           fileName : "variables for R program.xlsx"
         }, function(output){
-          $("#output").val(output.message);
-	  alert(("#output").val());	
+          $("#output").text(output.message);
+		
         });
         
         //if R returns an error, alert the error message
