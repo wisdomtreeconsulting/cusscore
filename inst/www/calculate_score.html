@@ -22,6 +22,7 @@
           fileName : "variables for R program.xlsx"
         }, function(output){
           $("#output").val(output.message);
+	  alert(("#output").val());	
         });
         
         //if R returns an error, alert the error message
@@ -36,13 +37,13 @@
       });
       
      var fitscore = $("#output").val().split(",")[0]; alert("fit:"+fitscore);
-     $("#fit1").val(fitscore)
+     $("#fit1").val(fitscore);
 	    
      var healthscore = $("#output").val().split(",")[1];alert("health:"+healthscore);
-     $("#health1").text(healthscore)
+     $("#health1").text(healthscore);
 	    
 	var valuescore = $("#output").val().split(",")[2];alert("value:"+valuescore);
-     $("#value1").text(valuescore)
+     $("#value1").text(valuescore);
     });
     </script>
     
