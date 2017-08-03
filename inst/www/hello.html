@@ -21,7 +21,10 @@
         }, function(output){
 
           var obj = JSON.parse(output.message);
-          
+          var avgfit = 0;
+          var avghealth = 0;
+          var avgvalue = 0;
+          var avgsuccess=0;
           
         for (var i = 0; i < obj.length; i++) {
              temp = i+1; 
@@ -30,7 +33,23 @@
             $("#health"+temp).text(obj[i].HEALTH);
             $("#value"+temp).text(obj[i].VALUE);
             $("#success"+temp).text(obj[i].SUCCESS_SCORES);
+
+            avgfit = avgfit+obj[i].FIT;
+            avghealth = avghealth+obj[i].HEALTH;
+            avgvalue = avgvalue+obj[i].VALUE;
+            avgsuccess = avgsuccess+obj[i].SUCCESS_SCORES;
           };
+
+          avgfit = parseInt(avgfit/obj.length);
+          avghealth = parseInt(avghealth/obj.length);
+          avgvalue = parseInt(avgvalue/obj.length);
+          avgsuccess = parseInt(avgsuccess/obj.length);
+         
+
+            $("#avgfit").text(avgfit);
+            $("#avghealth").text(avghealth);
+            $("#avgvalue").text(avgvalue);
+            $("#avgsuccess").text(avgsuccess);
         });
         
         //if R returns an error, alert the error message
@@ -44,6 +63,32 @@
         });
       });
       
+
+      google.charts.load('current', {'packages':['gauge']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['Fit', parseInt($("#avgfit").text())],
+          ['Health', parseInt($("#avghealth").text())],
+          ['Value', parseInt($("#avgvalue").text())],
+          ['Success', parseInt($("#avgsuccess").text())],
+        ]);
+
+        var options = {
+          width: 800, height: 120,
+          redFrom: 0, redTo: 30,
+          yellowFrom:31, yellowTo: 60,
+          greenFrom:60, greenTo:100,
+          minorTicks: 5
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      }
      
     });
     </script>
@@ -54,10 +99,43 @@
     
   <body>
     <h1>Customer Score</h1>
-      <button id="submitbutton" type="button">Submit to server!</button>
+      <button id="submitbutton" type="button">Get Your Score!</button>
     
         <p id="output"></p>
+    <table cellspacing='0'>
+
+   <thead>
+
+    <tr>
+      
+      <th>Average Fit Score</th>
+      <th>Average Health Score</th>
+      <th>Average Value Score</th>
+      <th>Average Success Score</th>
+      
+    </tr>
   
+
+ </thead>
+ <br/>
+<div id="chart_div" style="width: 600px; height: 120px;padding-left:400;"></div>
+ 
+ <tbody>
+
+    <tr>
+     <tr>
+      
+      <td id="avgfit"></td>
+      <td id="avghealth"></td>
+      <td id="avgvalue"></td>
+      <td id="avgsuccess"></td>
+      
+    </tr><!-- Table Row -->
+  </tbody>
+</table>
+
+<br/>
+<br/>
     <table cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
 
   <!-- Table Header -->
