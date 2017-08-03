@@ -36,14 +36,7 @@
         });
       });
       
-     var fitscore = $("#output").val().split(",")[0]; alert("fit:"+fitscore);
-     $("#fit1").val(fitscore);
-	    
-     var healthscore = $("#output").val().split(",")[1];alert("health:"+healthscore);
-     $("#health1").text(healthscore);
-	    
-	var valuescore = $("#output").val().split(",")[2];alert("value:"+valuescore);
-     $("#value1").text(valuescore);
+   
     });
     </script>
     
@@ -156,7 +149,7 @@ table tr:hover td {
     
     <button id="submitbutton" type="button">Submit to server!</button>
     
-    <p id="output", type="hidden"></p>
+    <p id="output"></p>
   
     <table cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
 
