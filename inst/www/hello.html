@@ -50,21 +50,9 @@
             $("#avghealth").text(avghealth);
             $("#avgvalue").text(avgvalue);
             $("#avgsuccess").text(avgsuccess);
-        });
-        
-        //if R returns an error, alert the error message
-        req.fail(function(){
-          alert("Server error: " + req.responseText);
-        });
-        
-        //after request complete, re-enable the button 
-        req.always(function(){
-          $("#submitbutton").removeAttr("disabled")
-        });
-      });
-      
 
-      google.charts.load('current', {'packages':['gauge']});
+
+                  google.charts.load('current', {'packages':['gauge']});
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
@@ -89,6 +77,21 @@
 
         chart.draw(data, options);
       }
+        });
+        
+        //if R returns an error, alert the error message
+        req.fail(function(){
+          alert("Server error: " + req.responseText);
+        });
+        
+        //after request complete, re-enable the button 
+        req.always(function(){
+          $("#submitbutton").removeAttr("disabled")
+        });
+      });
+      
+
+
      
     });
     </script>
