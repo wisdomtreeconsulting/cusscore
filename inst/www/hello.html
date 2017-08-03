@@ -19,8 +19,13 @@
         var req = ocpu.rpc("calculate_score", {
           fileName : "variables for R program.xlsx"
         }, function(output){
-          alert(output.message);
+        try {
+        alert(JSON.parse(output.message));
+    } catch (e) {
+        alert("bad json");
+    }
          var obj = JSON.parse(output.message);
+          
           $("#fit1").text(obj.fit_score);
     
         });
