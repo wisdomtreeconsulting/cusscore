@@ -19,7 +19,7 @@
         var req = ocpu.rpc("calculate_score", {
           fileName : "variables for R program.xlsx"
         }, function(output){
-          $("#fit").text(output.message);
+          $("#fit1").val(output.message);
     
         });
         
