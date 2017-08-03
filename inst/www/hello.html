@@ -21,6 +21,7 @@
         }, function(output){
        
          var obj = JSON.parse(output.message);
+          alert(output.message);
           alert(obj.fit_score);
           $("#fit1").text(obj.fit_score);
     
