@@ -24,7 +24,7 @@ compute_Scores <- function(){sapply(param_weights$PARAM.DATA, function(x){
 # Restrict max value to 100
 param_weights$SCORE <- pmin(compute_Scores(),100)
 
-final_scores <- aggregate((SCORE*Weight)~ Customer.Id+Category, data = param_weights, sum)
+final_scores <- aggregate(round(SCORE*Weight)~ Customer.Id+Category, data = param_weights, sum)
 colnames(final_scores) <- c("CustomerID","Category","Score")
 
 #Get to desired Format
