@@ -1,12 +1,11 @@
 
 calculate_score <- function(fileName){
 
-# param_values <- read.xlsx2("param values for R program.xlsx",sheetName = "Sheet1")
- param_weights <- read.csv("G:\\Wisdom Tree\\Scoring\\Web Service\\weights.csv")
+param_weights <- read.csv("G:\\Wisdom Tree\\Scoring\\Web Service\\weights.csv")
 
 str(param_weights)
 names(param_weights)
-cols = c(3:14)
+cols = c(4:15)
 param_weights[,cols] =apply(param_weights[,cols], 2, function(x) as.numeric(as.character(x)))
 
 
@@ -22,19 +21,17 @@ compute_Scores <- function(){sapply(param_weights$PARAM.DATA, function(x){
 
 }
 
-param_weights$SCORE <- compute_Scores()
+# Restrict max value to 100
+param_weights$SCORE <- pmin(compute_Scores(),100)
 
-fit_score <- sum(param_weights[param_weights$Category=="FIT",]$SCORE*
-  param_weights[param_weights$Category=="FIT",]$Weight)
+final_scores <- aggregate((SCORE*Weight)~ Customer.Id+Category, data = param_weights, sum)
+colnames(final_scores) <- c("CustomerID","Category","Score")
 
-health_score <- sum(param_weights[param_weights$Category=="HEALTH",]$SCORE*
-                   param_weights[param_weights$Category=="HEALTH",]$Weight)
+#Get to desired Format
+library(reshape2)
+final_scores <- dcast(final_scores, CustomerID~Category,value.var = "Score")
 
-value_score <- sum(param_weights[param_weights$Category=="VALUE",]$SCORE*
-                   param_weights[param_weights$Category=="VALUE",]$Weight)
-
-success_score <- 0.1*fit_score+0.5*health_score + 0.4*value_score
-final_scores <- data.frame(cbind(fit_score,health_score,value_score,success_score))
+final_scores$SUCCESS_SCORES <- 0.1*final_scores$FIT+0.5*final_scores$HEALTH + 0.4*final_scores$VALUE
 library(jsonlite)
                          
  list(
