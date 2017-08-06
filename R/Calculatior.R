@@ -51,7 +51,7 @@ library(mongolite)
 
 customerCollection <- mongo(collection = "customer_score", db="local")
 
-tryCatch({
+result <- tryCatch({
   customerCollection$insert(final_scores)
 
 }, warning = function(w) {
