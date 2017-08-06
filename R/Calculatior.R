@@ -50,14 +50,22 @@ library(jsonlite)
 library(mongolite)
 
 customerCollection <- mongo(collection = "customer_score", db="local")
-
+final_output <-0
 
 customerCollection$insert(final_scores)
-
-final_output <- customerCollection$find('{"Date":"1-Jul-17"}',sort = '{"SUCCESS_SCORES": -1}',limit = 10,
+ tryCatch({
+    final_output <- customerCollection$find('{"Date":"1-Jul-17"}',sort = '{"SUCCESS_SCORES": -1}',limit = 10,
                         fields = '{"_id":false,"Cust_Name":true,"FIT": true,"HEALTH" : true,
                         "VALUE": true,"SUCCESS_SCORES":true}')
+}, warning = function(w) {
+    warning-handler-code
+}, error = function(e) {
+    
+}, finally = {
+    
+}
 
 
-return(fit_score)
+
+return(final_output)
 }
