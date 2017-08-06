@@ -19,13 +19,13 @@
         var req = ocpu.rpc("calculate_score", {
           date : "1-Jul-17"
         }, function(output){
-           alert(output);
+           
           var obj = JSON.parse(output);
           var avgfit = 0;
           var avghealth = 0;
           var avgvalue = 0;
           var avgsuccess=0;
-          alert(obj.length);
+         
         for (var i = 0; i < obj.length; i++) {
              temp = i+1; 
             $("#customer"+temp).text(obj[i].CustomerID);
@@ -123,18 +123,7 @@
  <br/>
 <div id="chart_div" style="width: 600px; height: 120px;padding-left:400;"></div>
  
- <tbody>
 
-    <tr>
-     <tr>
-      
-      <td id="avgfit"></td>
-      <td id="avghealth"></td>
-      <td id="avgvalue"></td>
-      <td id="avgsuccess"></td>
-      
-    </tr><!-- Table Row -->
-  </tbody>
 </table>
 
 <br/>
