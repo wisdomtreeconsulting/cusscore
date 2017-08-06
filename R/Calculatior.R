@@ -68,5 +68,5 @@ final_output <- customerCollection$find('{"Date":"1-Jul-17"}',sort = '{"SUCCESS_
 
 
 
-return("abc")
+return(final_output)
 }
