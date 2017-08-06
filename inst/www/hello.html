@@ -19,7 +19,7 @@
         var req = ocpu.rpc("calculate_score", {
           fileName : "variables for R program.xlsx"
         }, function(output){
-
+           alert(output.message);
           var obj = JSON.parse(output.message);
           var avgfit = 0;
           var avghealth = 0;
