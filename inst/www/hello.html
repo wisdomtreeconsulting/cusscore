@@ -18,7 +18,7 @@
         //perform the request
         var req = ocpu.rpc("calculate_score", {
           date : "1-Jul-17"
-        }, function(output.message){
+        }, function(output){
            alert(output);
           var obj = JSON.parse(output.message);
           var avgfit = 0;
