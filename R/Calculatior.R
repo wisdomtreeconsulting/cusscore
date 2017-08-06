@@ -44,7 +44,7 @@ final_scores <- merge(final_scores, cust_metadata, by.x =c("CustomerID"),by.y = 
 
 
 
-final_scores$SUCCESS_SCORES <- 0.1*final_scores$FIT+0.5*final_scores$HEALTH + 0.4*final_scores$VALUE
+final_scores$SUCCESS_SCORES <- round(0.1*final_scores$FIT+0.5*final_scores$HEALTH + 0.4*final_scores$VALUE)
 
 library(jsonlite)
 library(mongolite)
