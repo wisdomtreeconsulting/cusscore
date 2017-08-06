@@ -58,7 +58,7 @@ customerCollection$insert(final_scores)
                         fields = '{"_id":false,"Cust_Name":true,"FIT": true,"HEALTH" : true,
                         "VALUE": true,"SUCCESS_SCORES":true}')
 }, warning = function(w) {
-    warning-handler-code
+   
 }, error = function(e) {
     
 }, finally = {
