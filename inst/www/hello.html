@@ -19,8 +19,8 @@
         var req = ocpu.rpc("calculate_score", {
           date : "1-Jul-17"
         }, function(output){
-           alert(output.message);
-          var obj = JSON.parse(output.message);
+           alert(output);
+          var obj = JSON.parse(output);
           var avgfit = 0;
           var avghealth = 0;
           var avgvalue = 0;
