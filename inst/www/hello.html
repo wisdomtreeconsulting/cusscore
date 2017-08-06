@@ -19,13 +19,13 @@
         var req = ocpu.rpc("calculate_score", {
           date : "1-Jul-17"
         }, function(output){
-           alert(output);
+           alert(output.message);
           var obj = JSON.parse(output.message);
           var avgfit = 0;
           var avghealth = 0;
           var avgvalue = 0;
           var avgsuccess=0;
-          
+          alert(obj.length);
         for (var i = 0; i < obj.length; i++) {
              temp = i+1; 
             $("#customer"+temp).text(obj[i].CustomerID);
