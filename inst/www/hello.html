@@ -17,7 +17,7 @@
         
         //perform the request
         var req = ocpu.rpc("calculate_score", {
-          fileName : "variables for R program.xlsx"
+          date : "1-Jul-17"
         }, function(output){
            alert(output.message);
           var obj = JSON.parse(output.message);
