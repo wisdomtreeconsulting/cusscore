@@ -68,7 +68,7 @@ final_output <- customerCollection$find('{"Date":"1-Jul-17"}',sort = '{"SUCCESS_
 #need to find last 7 days success scores for the customer ids
 trend_customers <- final_output$CustomerID
 
-trend_scores <- customerCollection$find('{"CustomerID":{"$in":[1001,1002]}}',
+trend_scores <- customerCollection$find(paste('{"CustomerID":{"$in":',toJSON(trend_customers),'}}'),
                         fields = '{"_id":false,"Cust_Name":false,"FIT": false,"VALUE": false,
                         "Date":false,"HEALTH":false}')
 
