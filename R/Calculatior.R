@@ -65,7 +65,20 @@ result <- tryCatch({
 final_output <- customerCollection$find('{"Date":"1-Jul-17"}',sort = '{"SUCCESS_SCORES": -1}',limit = 10,
                                         fields = '{"_id":false,"Cust_Name":true,"FIT": true,"HEALTH" : true,
                                         "VALUE": true,"SUCCESS_SCORES":true}')
+trend_customers <- final_output$CustomerID
 
+trend_scores <- customerCollection$find('{"CustomerID":{"$in":[1001,1002]}}',
+                        fields = '{"_id":false,"Cust_Name":false,"FIT": false,"VALUE": false,
+                        "Date":false,"HEALTH":false}')
+
+trend_scores <- data.frame(aggregate( SUCCESS_SCORES ~ CustomerID,
+                                      data = trend_scores, paste, collapse = ","))
+
+colnames(trend_scores) <- c("CustomerID", "Trend_Scores")
+
+
+final_output <- merge(final_output, trend_scores, by = "CustomerID",all.x = TRUE)
+final_output$Trend_Scores<- ifelse(!is.na(final_output$Trend_Scores)>0, final_output$Trend_Scores,"No Data")
 
 
 return(toJSON(final_output))
