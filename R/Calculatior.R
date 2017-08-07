@@ -2,7 +2,7 @@ calculate_score <- function(date){
 
 # Set the working Directory to source
 # Need to figure out
-
+print(date)
 
 param_weights <- read.csv("G:\\Wisdom Tree\\Scoring\\Web Service\\Data_Tables\\ParamWeightMappings.csv")
 cust_metadata <- read.csv("G:\\Wisdom Tree\\Scoring\\Web Service\\Data_Tables\\CustomerData.csv")
