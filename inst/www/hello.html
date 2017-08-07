@@ -105,32 +105,55 @@
       <button id="submitbutton" type="button">Get Your Score!</button>
     
         <p id="output"></p>
-    <table cellspacing='0'>
+   <table cellspacing='0'>
 
    <thead>
 
     <tr>
       
-      <th>Average Fit Score</th>
-      <th>Average Health Score</th>
-      <th>Average Value Score</th>
-      <th>Average Success Score</th>
+      <th>Portfolio Fit Score</th>
+      <th>Portfolio Health Score</th>
+      <th>Portfolio Value Score</th>
+      <th>Portfolio Success Score</th>
       
     </tr>
   
 
  </thead>
  <br/>
-<div id="chart_div" style="width: 600px; height: 120px;padding-left:400;"></div>
- 
 
+
+
+
+
+
+ <tbody>
+
+    <tr>
+      <td style="width: 100px; padding-left:400;border:none;"><div id="chart_div1" ></div></td>
+      <td style="width: 150px; height: 120px;padding-left:300;"><div id="chart_div2" ></div></td>
+      <td style="width: 100px; height: 120px;padding-left:400;"><div id="chart_div3" ></div></td>
+      <td style="width: 100px; height: 120px;padding-left:400;"><div id="chart_div4" ></div></td>
+     <tr>
+      
+
+      
+    </tr><!-- Table Row -->
+  </tbody>
 </table>
 
+
+      <p id="avgfit" style="display:none;"></p>
+      <p id="avghealth" type="hidden"></p>
+      <p id="avgvalue" type="hidden"></p>
+      <p id="avgsuccess" type="hidden"></p>
 <br/>
 <br/>
     <table cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
 
   <!-- Table Header -->
+
+
   <thead>
     <tr>
       <th>Customer Name</th>
@@ -138,9 +161,10 @@
       <th>Health Score</th>
       <th>Value Score</th>
       <th>Success Score</th>
-      <th>Human Insights</th>
-      <th>Machine Insights</th>
-      <th>Success Plays</th>
+      <th style="width:100px;border-right:1px solid #e0e0e0">Trend</th>
+      <th style="background: white;border-top:none;border-bottom:none;"></th>
+      <th style="width:200px;">Insights</th>
+      <th style="width:200px;">Success Plays</th>
     </tr>
   </thead>
   <!-- Table Header -->
@@ -156,7 +180,8 @@
       <td id="value1"></td>
       <td id="success1"></td>
       <td id="hinsight1"></td>
-      <td id="minsight1"></td>
+      <td style="border-bottom:none;border-top:none;background:white;"></td>
+      <td id="insight1"></td>
       <td id="play1"></td>
     </tr><!-- Table Row -->
 
@@ -167,7 +192,8 @@
       <td id="value2"></td>
       <td id="success2"></td>
       <td id="hinsight2"></td>
-      <td id="minsight2"></td>
+      <td style="border-bottom:none;border-top:none;background:white;"></td>
+      <td id="insight2"></td>
       <td id="play2"></td>
     </tr><!-- Darker Table Row -->
 
@@ -178,7 +204,8 @@
       <td id="value3"></td>
       <td id="success3"></td>
       <td id="hinsight3"></td>
-      <td id="minsight3"></td>
+      <td style="border-bottom:none;border-top:none;background:white;"></td>
+      <td id="insight3"></td>
       <td id="play3"></td>
     </tr>
 
@@ -189,7 +216,8 @@
       <td id="value4"></td>
       <td id="success4"></td>
       <td id="hinsight4"></td>
-      <td id="minsight4"></td>
+      <td style="border-bottom:none;border-top:none;background:white;"></td>
+      <td id="insight4"></td>
       <td id="play4"></td>
     </tr>
 
@@ -200,7 +228,8 @@
       <td id="value5"></td>
       <td id="success5"></td>
       <td id="hinsight5"></td>
-      <td id="minsight5"></td>
+      <td style="border-bottom:none;border-top:none;background:white;"></td>
+      <td id="insight5"></td>
       <td id="play5"></td>
     </tr>
 
@@ -211,7 +240,8 @@
       <td id="value6"></td>
       <td id="success6"></td>
       <td id="hinsight6"></td>
-      <td id="minsight6"></td>
+      <td style="border-bottom:none;border-top:none;background:white;"></td>
+      <td id="insight6"></td>
       <td id="play6"></td>
     </tr>
 
@@ -222,7 +252,8 @@
       <td id="value7"></td>
       <td id="success7"></td>
       <td id="hinsight7"></td>
-      <td id="minsight7"></td>
+      <td style="border-bottom:none;border-top:none;background:white;"></td>
+      <td id="insight7"></td>
       <td id="play7"></td>
     </tr>
 <tr class="even">
@@ -232,7 +263,8 @@
       <td id="value8"></td>
       <td id="success8"></td>
       <td id="hinsight8"></td>
-      <td id="minsight8"></td>
+      <td style="border-bottom:none;border-top:none;background:white;"></td>
+      <td id="insight8"></td>
       <td id="play8"></td>
     </tr>
 
@@ -243,7 +275,8 @@
       <td id="value9"></td>
       <td id="success9"></td>
       <td id="hinsight9"></td>
-      <td id="minsight9"></td>
+      <td style="border-bottom:none;border-top:none;background:white;"></td>
+      <td id="insight9"></td>
       <td id="play9"></td>
     </tr>
     <tr class="even">
@@ -253,7 +286,8 @@
       <td id="value10"></td>
       <td id="success10"></td>
       <td id="hinsight10"></td>
-      <td id="minsight10"></td>
+      <td style="border-bottom:none;border-top:none;background:white;"></td>
+      <td id="insight10"></td>
       <td id="play10"></td>
     </tr>
 
