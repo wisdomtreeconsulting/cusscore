@@ -46,10 +46,10 @@
           avgsuccess = parseInt(avgsuccess/obj.length);
          
 
-            $("#avgfit").text(avgfit);
-            $("#avghealth").text(avghealth);
-            $("#avgvalue").text(avgvalue);
-            $("#avgsuccess").text(avgsuccess);
+            $("#avgfit").val(avgfit);
+            $("#avghealth").val(avghealth);
+            $("#avgvalue").val(avgvalue);
+            $("#avgsuccess").val(avgsuccess);
 
 
                   google.charts.load('current', {'packages':['gauge']});
@@ -57,12 +57,22 @@
 
       function drawChart() {
 
-        var data = google.visualization.arrayToDataTable([
+         var data1 = google.visualization.arrayToDataTable([
           ['Label', 'Value'],
-          ['Fit', parseInt($("#avgfit").text())],
-          ['Health', parseInt($("#avghealth").text())],
-          ['Value', parseInt($("#avgvalue").text())],
-          ['Success', parseInt($("#avgsuccess").text())],
+          ['Fit', parseInt($("#avgfit").val())]
+          
+        ]);
+        var data2 = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['Health', parseInt($("#avghealth").val())]
+        ]);
+        var data3 = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['Value', parseInt($("#avgvalue").val())]
+        ]);
+        var data4 = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['Success', parseInt($("#avgsuccess").val())]
         ]);
 
         var options = {
@@ -73,9 +83,15 @@
           minorTicks: 5
         };
 
-        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+        var chart1 = new google.visualization.Gauge(document.getElementById('chart_div1'));
+        var chart2 = new google.visualization.Gauge(document.getElementById('chart_div2'));
+        var chart3 = new google.visualization.Gauge(document.getElementById('chart_div3'));
+        var chart4 = new google.visualization.Gauge(document.getElementById('chart_div4'));
 
-        chart.draw(data, options);
+        chart1.draw(data1, options);
+        chart2.draw(data2, options);
+        chart3.draw(data3, options);
+        chart4.draw(data4, options);
       }
         });
         
