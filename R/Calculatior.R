@@ -77,7 +77,7 @@ trend_scores <- data.frame(aggregate( SUCCESS_SCORES ~ CustomerID,
 colnames(trend_scores) <- c("CustomerID", "Trend_Scores")
 
 
-final_output <- merge(final_output, trend_scores, by = "CustomerID",all.x = TRUE)
+final_output <- merge(final_output, trend_scores, by.x = "CustomerID", by.y = "CustomerID",all.x = TRUE)
 final_output$Trend_Scores<- ifelse(!is.na(final_output$Trend_Scores)>0, final_output$Trend_Scores,"No Data")
 
 
