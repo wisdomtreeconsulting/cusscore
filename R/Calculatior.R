@@ -9,10 +9,6 @@ cust_metadata <- read.csv("G:\\Wisdom Tree\\Scoring\\Web Service\\Data_Tables\\C
 raw_input <- read.csv("G:\\Wisdom Tree\\Scoring\\Web Service\\Data_Tables\\CustParamMapping.csv")
 
 
-str(param_weights)
-str(cust_metadata)
-str(raw_input)
-
 combined_inputs <- merge(x = param_weights, y = raw_input, by=c("cust_id","param_id"))
 
 
@@ -51,7 +47,10 @@ library(mongolite)
 
 customerCollection <- mongo(collection = "customer_score", db="local")
 
-result <- tryCatch({
+
+
+
+tryCatch({
   customerCollection$insert(final_scores)
 
 }, warning = function(w) {
@@ -64,7 +63,9 @@ result <- tryCatch({
 
 final_output <- customerCollection$find('{"Date":"1-Jul-17"}',sort = '{"SUCCESS_SCORES": -1}',limit = 10,
                                         fields = '{"_id":false,"Cust_Name":true,"FIT": true,"HEALTH" : true,
-                                        "VALUE": true,"SUCCESS_SCORES":true}')
+                                        "VALUE": true,"SUCCESS_SCORES":true,"CustomerID":true}')
+
+#need to find last 7 days success scores for the customer ids
 trend_customers <- final_output$CustomerID
 
 trend_scores <- customerCollection$find('{"CustomerID":{"$in":[1001,1002]}}',
@@ -77,9 +78,8 @@ trend_scores <- data.frame(aggregate( SUCCESS_SCORES ~ CustomerID,
 colnames(trend_scores) <- c("CustomerID", "Trend_Scores")
 
 
-final_output <- merge(final_output, trend_scores, by.x = "CustomerID", by.y = "CustomerID",all.x = TRUE)
+final_output <- merge(final_output, trend_scores, by = "CustomerID",all.x = TRUE)
 final_output$Trend_Scores<- ifelse(!is.na(final_output$Trend_Scores)>0, final_output$Trend_Scores,"No Data")
-
 
 return(toJSON(final_output))
 }
