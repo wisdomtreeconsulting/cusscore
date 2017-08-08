@@ -2,14 +2,15 @@ calculate_score <- function(date){
 
 # Set the working Directory to source
 # Need to figure out
-print(date)
 
-param_weights <- read.csv("G:\\Wisdom Tree\\Scoring\\Web Service\\Data_Tables\\ParamWeightMappings.csv")
-cust_metadata <- read.csv("G:\\Wisdom Tree\\Scoring\\Web Service\\Data_Tables\\CustomerData.csv")
-raw_input <- read.csv("G:\\Wisdom Tree\\Scoring\\Web Service\\Data_Tables\\CustParamMapping.csv")
+
+param_weights <- read.csv("../Data_Tables/ParamWeightMappings.csv")
+cust_metadata <- read.csv("../Data_Tables/CustomerData.csv")
+raw_input <- read.csv("../Data_Tables/CustParamMapping.csv")
 
 
 combined_inputs <- merge(x = param_weights, y = raw_input, by=c("cust_id","param_id"))
+
 
 
 
@@ -47,13 +48,10 @@ library(mongolite)
 
 customerCollection <- mongo(collection = "customer_score", db="local")
 
-
-
-
 tryCatch({
   customerCollection$insert(final_scores)
 
-}, warning = function(w) {
+  }, warning = function(w) {
 
 }, error = function(e) {
 
@@ -61,24 +59,43 @@ tryCatch({
 
 })
 
-final_output <- customerCollection$find('{"Date":"1-Jul-17"}',sort = '{"SUCCESS_SCORES": -1}',limit = 10,
+final_output <- customerCollection$find('{"Date":"05/07/2017"}',sort = '{"SUCCESS_SCORES": -1}',limit = 10,
                                         fields = '{"_id":false,"Cust_Name":true,"FIT": true,"HEALTH" : true,
                                         "VALUE": true,"SUCCESS_SCORES":true,"CustomerID":true}')
 
 #need to find last 7 days success scores for the customer ids
 trend_customers <- final_output$CustomerID
 
-trend_scores <- customerCollection$find(paste('{"CustomerID":{"$in":',toJSON(trend_customers),'}}'),
-                        fields = '{"_id":false,"Cust_Name":false,"FIT": false,"VALUE": false,
-                        "Date":false,"HEALTH":false}')
 
-trend_scores <- data.frame(aggregate( SUCCESS_SCORES ~ CustomerID,
+
+# trend_scores <- customerCollection$find(paste('{"CustomerID":{"$in":',toJSON(trend_customers),'}}'),
+#                             fields = '{"_id":false,"Cust_Name":false,"FIT": false,"VALUE": false,
+#                         "Date":false,"HEALTH":false}')
+
+
+trend_scores <- customerCollection$aggregate(paste('[
+                             {"$match":{"CustomerID":{"$in":',toJSON(trend_customers),'}}},
+                             {"$group":{
+                                  "_id":"$CustomerID",
+                                  "docs":{"$push":{"_id":"$_id","Date":"$Date","Score":"$SUCCESS_SCORES"}}
+                                    }},
+                             {"$project":{"top_seven":{"$slice":["$docs",7]}}},
+                             {"$unwind":"$top_seven"}
+
+]'))
+
+
+trend_scores <- cbind(trend_scores[,1],trend_scores[,2])
+colnames(trend_scores) <- c("CustomerID","id","Date","Trend_Scores")
+trend_scores <- data.frame(aggregate( Trend_Scores ~ CustomerID,
                                       data = trend_scores, paste, collapse = ","))
 
-colnames(trend_scores) <- c("CustomerID", "Trend_Scores")
+
 
 
 final_output <- merge(final_output, trend_scores, by = "CustomerID",all.x = TRUE)
+
+
 final_output$Trend_Scores<- ifelse(!is.na(final_output$Trend_Scores)>0, final_output$Trend_Scores,"No Data")
 
 return(toJSON(final_output))
