@@ -59,7 +59,7 @@ tryCatch({
 
 })
 
-final_output <- customerCollection$find('{"Date":"05/07/2017"}',sort = '{"SUCCESS_SCORES": -1}',limit = 10,
+final_output <- customerCollection$find(paste('{"Date":"',date,'"}',sep=""),sort = '{"SUCCESS_SCORES": -1}',limit = 10,
                                         fields = '{"_id":false,"Cust_Name":true,"FIT": true,"HEALTH" : true,
                                         "VALUE": true,"SUCCESS_SCORES":true,"CustomerID":true}')
 
