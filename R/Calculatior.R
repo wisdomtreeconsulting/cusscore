@@ -3,7 +3,7 @@ calculate_score <- function(date){
 # Set the working Directory to source
 # Need to figure out
 
-
+setwd("G://Wisdom Tree//Scoring//Web Service//MyPackage")
 param_weights <- read.csv("../Data_Tables/ParamWeightMappings.csv")
 cust_metadata <- read.csv("../Data_Tables/CustomerData.csv")
 raw_input <- read.csv("../Data_Tables/CustParamMapping.csv")
