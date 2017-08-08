@@ -61,11 +61,11 @@ tryCatch({
 
     d <- as.Date( as.character(date), "%m/%d/%Y")
    date <-  format(d, "%d/%m/%Y")
-write(as.character(date),file="date.txt") 
+
 final_output <- customerCollection$find(paste('{"Date":"',as.character(date),'"}',sep=""),sort = '{"SUCCESS_SCORES": -1}',limit = 10,
                                         fields = '{"_id":false,"Cust_Name":true,"FIT": true,"HEALTH" : true,
                                         "VALUE": true,"SUCCESS_SCORES":true,"CustomerID":true}')
-
+write(final_output,file="dafinal_output.txt") 
 #need to find last 7 days success scores for the customer ids
 trend_customers <- final_output$CustomerID
 
@@ -87,7 +87,7 @@ trend_scores <- customerCollection$aggregate(paste('[
 
 ]'))
 
-
+write(trend_scores,file="trend_scores.txt")
 trend_scores <- cbind(trend_scores[,1],trend_scores[,2])
 colnames(trend_scores) <- c("CustomerID","id","Date","Trend_Scores")
 trend_scores <- data.frame(aggregate( Trend_Scores ~ CustomerID,
