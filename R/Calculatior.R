@@ -59,6 +59,8 @@ tryCatch({
 
 })
 
+    d <- as.Date( as.character(date), "%m/%d/%Y")
+   date <-  format(d, "%d/%m/%Y")
 write(as.character(date),file="date.txt") 
 final_output <- customerCollection$find(paste('{"Date":"',as.character(date),'"}',sep=""),sort = '{"SUCCESS_SCORES": -1}',limit = 10,
                                         fields = '{"_id":false,"Cust_Name":true,"FIT": true,"HEALTH" : true,
