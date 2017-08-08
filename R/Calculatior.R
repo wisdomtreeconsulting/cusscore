@@ -58,8 +58,8 @@ tryCatch({
 }, finally = {
 
 })
-print(date)
-print(as.character(date))   
+
+write(as.character(date),file="date.txt") 
 final_output <- customerCollection$find(paste('{"Date":"',as.character(date),'"}',sep=""),sort = '{"SUCCESS_SCORES": -1}',limit = 10,
                                         fields = '{"_id":false,"Cust_Name":true,"FIT": true,"HEALTH" : true,
                                         "VALUE": true,"SUCCESS_SCORES":true,"CustomerID":true}')
