@@ -128,11 +128,15 @@
                           data.addRows(JSON.parse(data_row));
 
                           var options = {
-                              hAxis: {
-                                  title: 'Time'
+                             hAxis: {
+                                  title: '',
+                                  gridlines: {color: 'none'},
+                                  baselineColor: 'none'
                               },
                               vAxis: {
-                                  title: 'Popularity'
+                                  title: '',
+                                  gridlines: {color: 'none'},
+                                  baselineColor: 'none'
                               },
                               colors: ['#a52714', '#097138'],
                               crosshair: {
