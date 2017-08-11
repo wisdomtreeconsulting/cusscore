@@ -102,5 +102,5 @@ final_output <- merge(final_output, trend_scores, by = "CustomerID",all.x = TRUE
 
 final_output$Trend_Scores<- ifelse(!is.na(final_output$Trend_Scores)>0, final_output$Trend_Scores,"No Data")
 
-return(toJSON(final_output))
+return(toJSON(final_output[ order(-final_output[,6], final_output[,6]), ]))
 }
