@@ -70,7 +70,8 @@ tryCatch({
 final_output <- customerCollection$find(paste('{"Date":"',as.character(date),'"}',sep=""),sort = '{"SUCCESS_SCORES": -1}',limit = 10,
                                         fields = '{"_id":false,"Cust_Name":true,"FIT": true,"HEALTH" : true,
                                         "VALUE": true,"SUCCESS_SCORES":true,"CustomerID":true}')
-
+print(final_output)
+ print(nrow(final_output))
 #need to find last 7 days success scores for the customer ids
 trend_customers <- final_output$CustomerID
 
@@ -92,7 +93,8 @@ trend_scores <- customerCollection$aggregate(paste('[
 
 ]'))
 
-
+print(trend_scores)
+print(nrow(trend_scores)) 
 trend_scores <- cbind(trend_scores[,1],trend_scores[,2])
 colnames(trend_scores) <- c("CustomerID","id","Date","Trend_Scores")
 trend_scores <- data.frame(aggregate( Trend_Scores ~ CustomerID,
