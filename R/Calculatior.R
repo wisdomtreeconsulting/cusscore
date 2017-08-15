@@ -4,7 +4,7 @@ calculate_score <- function(date){
 # Need to figure out
 
 # setwd("G://Wisdom Tree//Scoring//Web Service//MyPackage")
-   setwd("/home/sujay")
+   setwd("/")
 param_weights <- read.csv("../Data_Tables/ParamWeightMappings.csv")
 cust_metadata <- read.csv("../Data_Tables/CustomerData.csv")
 raw_input <- read.csv("../Data_Tables/CustParamMapping.csv")
