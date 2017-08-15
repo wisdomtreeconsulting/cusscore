@@ -51,7 +51,7 @@ final_scores$SUCCESS_SCORES <- round(0.1*final_scores$FIT+0.5*final_scores$HEALT
 library(jsonlite)
 library(mongolite)
 
-customerCollection <- mongo(collection = "customer_score", db="local")
+customerCollection <- mongo(collection = "cusscore", db="local")
 
 tryCatch({
   customerCollection$insert(final_scores)
