@@ -4,11 +4,18 @@ calculate_score <- function(date){
 # Need to figure out
 library(utils)
  #setwd("G://Wisdom Tree//Scoring//Web Service//MyPackage")
-   #setwd("/home/wisdomtree")
+   setwd("/home/wisdomtree")
+ tryCatch({
 param_weights <- read.csv("/home/wisdomtree/ParamWeightMappings.csv")
 cust_metadata <- read.csv("/home/wisdomtree/Data_Tables/CustomerData.csv")
 raw_input <- read.csv("/home/wisdomtree/Data_Tables/CustParamMapping.csv")
+ }, warning = function(w) {
 
+}, error = function(e) {
+sink(e, type="message")
+}, finally = {
+
+})
    
 # param_weights <- read.csv("../Data_Tables/ParamWeightMappings.csv")
 #cust_metadata <- read.csv("../Data_Tables/CustomerData.csv")
