@@ -12,7 +12,7 @@ raw_input <- read.csv("/home/wisdomtree/Data_Tables/CustParamMapping.csv")
  }, warning = function(w) {
 
 }, error = function(e) {
-sink(e, type="message")
+write(e, "errortxt.txt")
 }, finally = {
 
 })
