@@ -5,9 +5,9 @@ calculate_score <- function(date){
 library(utils)
  #setwd("G://Wisdom Tree//Scoring//Web Service//MyPackage")
    #setwd("/home/wisdomtree")
-param_weights <- read.csv("ParamWeightMappings.csv")
-cust_metadata <- read.csv("/Data_Tables/CustomerData.csv")
-raw_input <- read.csv("/Data_Tables/CustParamMapping.csv")
+param_weights <- read.csv("/home/wisdomtree/ParamWeightMappings.csv")
+cust_metadata <- read.csv("/home/wisdomtree/Data_Tables/CustomerData.csv")
+raw_input <- read.csv("/home/wisdomtree/Data_Tables/CustParamMapping.csv")
 
    
 # param_weights <- read.csv("../Data_Tables/ParamWeightMappings.csv")
