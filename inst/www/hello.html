@@ -42,15 +42,11 @@ function fetchScore(){
            $("#value"+temp).text(obj[i].VALUE);
            $("#success"+temp).text(obj[i].SUCCESS_SCORES);
            $("#trend"+temp).val(obj[i].Trend_Scores);
-           avgfit = avgfit+obj[i].FIT;
-           avghealth = avghealth+obj[i].HEALTH;
-           avgvalue = avgvalue+obj[i].VALUE;
-           avgsuccess = avgsuccess+obj[i].SUCCESS_SCORES;
          };
-         avgfit = parseInt(avgfit/obj.length);
-         avghealth = parseInt(avghealth/obj.length);
-         avgvalue = parseInt(avgvalue/obj.length);
-         avgsuccess = parseInt(avgsuccess/obj.length);
+         avgfit = obj[0].portfolio_fit;
+         avghealth = obj[0].portfolio_health;
+         avgvalue = obj[0].portfolio_value;
+         avgsuccess = obj[0].portfolio_success;
          
          $("#avgfit").val(avgfit);
          $("#avghealth").val(avghealth);
