@@ -92,8 +92,8 @@ trend_scores <- customerCollection$aggregate(paste('[
 
 ]'))
 
-print(trend_scores)
-print(nrow(trend_scores)) 
+write.csv(trend_scores,file="trendscores.csv")
+ 
 trend_scores <- cbind(trend_scores[,1],trend_scores[,2])
 colnames(trend_scores) <- c("CustomerID","id","Date","Trend_Scores")
 trend_scores <- data.frame(aggregate( Trend_Scores ~ CustomerID,
