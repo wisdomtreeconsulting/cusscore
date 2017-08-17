@@ -159,11 +159,13 @@ function fetchScore(){
         });
       }
 
-$(window).bind("load", function() {
-
-    $("#datepicker").val("07/01/2017");
-    fetchScore;
+$( window ).load(function() {
+  $("#datepicker").val("07/01/2017");
+    fetchScore();
 });
+
+   
+
 
       $("#submitbutton").on("click", fetchScore);
 
