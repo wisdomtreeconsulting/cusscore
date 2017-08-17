@@ -1,168 +1,153 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Hello</title>
-    
-    <!-- Include order: first jquery, then opencpu.js, and then your code -->
-    <script src="opencpu/jquery-1.10.2.min.js"></script>
-    <script src="opencpu/opencpu-0.4.js"></script>
-    <script src="loader.js"></script>
-    <script src="opencpu/jquery-ui.js"></script>
-    <script>
+<head>
+  <title>Hello</title>
+
+  <!-- Include order: first jquery, then opencpu.js, and then your code -->
+  <script src="opencpu/jquery-1.10.2.min.js"></script>
+  <script src="opencpu/opencpu-0.4.js"></script>
+  <script src="loader.js"></script>
+  <script src="opencpu/jquery-ui.js"></script>
+  <script>
     //init this script when the page has loaded
     $(document).ready(function(){
-     
+
       $( function() {
-    $( "#datepicker" ).datepicker();
-  } );
-      $("#submitbutton").on("click", function(){
+        $( "#datepicker" ).datepicker();
+      } );
+
+
+function fetchScore(){
         //disable the button to prevent multiple clicks
         $("#submitbutton").attr("disabled", "disabled");
         
-        
         //perform the request
-       
+
         var req = ocpu.rpc("calculate_score", {
-          date : $( "#datepicker" ).val()
+          date : $("#datepicker").val()
         }, function(output){
-          
+
           // alert(output);
           var obj = JSON.parse(output);
           var avgfit = 0;
           var avghealth = 0;
           var avgvalue = 0;
           var avgsuccess=0;
+
+          for (var i = 0; i < obj.length; i++) {
+           temp = i+1; 
+           $("#customer"+temp).text(obj[i].Cust_Name);
+           $("#fit"+temp).text(obj[i].FIT);
+           $("#health"+temp).text(obj[i].HEALTH);
+           $("#value"+temp).text(obj[i].VALUE);
+           $("#success"+temp).text(obj[i].SUCCESS_SCORES);
+           $("#trend"+temp).val(obj[i].Trend_Scores);
+           avgfit = avgfit+obj[i].FIT;
+           avghealth = avghealth+obj[i].HEALTH;
+           avgvalue = avgvalue+obj[i].VALUE;
+           avgsuccess = avgsuccess+obj[i].SUCCESS_SCORES;
+         };
+         avgfit = parseInt(avgfit/obj.length);
+         avghealth = parseInt(avghealth/obj.length);
+         avgvalue = parseInt(avgvalue/obj.length);
+         avgsuccess = parseInt(avgsuccess/obj.length);
          
-        for (var i = 0; i < obj.length; i++) {
-             temp = i+1; 
-            $("#customer"+temp).text(obj[i].Cust_Name);
-            $("#fit"+temp).text(obj[i].FIT);
-            $("#health"+temp).text(obj[i].HEALTH);
-            $("#value"+temp).text(obj[i].VALUE);
-            $("#success"+temp).text(obj[i].SUCCESS_SCORES);
-          $("#trend"+temp).val(obj[i].Trend_Scores);
-            avgfit = avgfit+obj[i].FIT;
-            avghealth = avghealth+obj[i].HEALTH;
-            avgvalue = avgvalue+obj[i].VALUE;
-            avgsuccess = avgsuccess+obj[i].SUCCESS_SCORES;
+         $("#avgfit").val(avgfit);
+         $("#avghealth").val(avghealth);
+         $("#avgvalue").val(avgvalue);
+         $("#avgsuccess").val(avgsuccess);
+         google.charts.load('current', {'packages':['gauge']});
+         google.charts.setOnLoadCallback(drawChart);
+         function drawChart() {
+           var data1 = google.visualization.arrayToDataTable([
+            ['Label', 'Value'],
+            ['Fit', parseInt($("#avgfit").val())]
+
+            ]);
+           var data2 = google.visualization.arrayToDataTable([
+            ['Label', 'Value'],
+            ['Health', parseInt($("#avghealth").val())]
+            ]);
+           var data3 = google.visualization.arrayToDataTable([
+            ['Label', 'Value'],
+            ['Value', parseInt($("#avgvalue").val())]
+            ]);
+           var data4 = google.visualization.arrayToDataTable([
+            ['Label', 'Value'],
+            ['Success', parseInt($("#avgsuccess").val())]
+            ]);
+           var options = {
+            width: 800, height: 120,
+            redFrom: 0, redTo: 30,
+            yellowFrom:31, yellowTo: 60,
+            greenFrom:60, greenTo:100,
+            minorTicks: 5
           };
-          avgfit = parseInt(avgfit/obj.length);
-          avghealth = parseInt(avghealth/obj.length);
-          avgvalue = parseInt(avgvalue/obj.length);
-          avgsuccess = parseInt(avgsuccess/obj.length);
-         
-            $("#avgfit").val(avgfit);
-            $("#avghealth").val(avghealth);
-            $("#avgvalue").val(avgvalue);
-            $("#avgsuccess").val(avgsuccess);
-                  google.charts.load('current', {'packages':['gauge']});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-         var data1 = google.visualization.arrayToDataTable([
-          ['Label', 'Value'],
-          ['Fit', parseInt($("#avgfit").val())]
-          
-        ]);
-        var data2 = google.visualization.arrayToDataTable([
-          ['Label', 'Value'],
-          ['Health', parseInt($("#avghealth").val())]
-        ]);
-        var data3 = google.visualization.arrayToDataTable([
-          ['Label', 'Value'],
-          ['Value', parseInt($("#avgvalue").val())]
-        ]);
-        var data4 = google.visualization.arrayToDataTable([
-          ['Label', 'Value'],
-          ['Success', parseInt($("#avgsuccess").val())]
-        ]);
-        var options = {
-          width: 800, height: 120,
-          redFrom: 0, redTo: 30,
-          yellowFrom:31, yellowTo: 60,
-          greenFrom:60, greenTo:100,
-          minorTicks: 5
-        };
-        var chart1 = new google.visualization.Gauge(document.getElementById('chart_div1'));
-        var chart2 = new google.visualization.Gauge(document.getElementById('chart_div2'));
-        var chart3 = new google.visualization.Gauge(document.getElementById('chart_div3'));
-        var chart4 = new google.visualization.Gauge(document.getElementById('chart_div4'));
-        chart1.draw(data1, options);
-        chart2.draw(data2, options);
-        chart3.draw(data3, options);
-        chart4.draw(data4, options);
-      }
+          var chart1 = new google.visualization.Gauge(document.getElementById('chart_div1'));
+          var chart2 = new google.visualization.Gauge(document.getElementById('chart_div2'));
+          var chart3 = new google.visualization.Gauge(document.getElementById('chart_div3'));
+          var chart4 = new google.visualization.Gauge(document.getElementById('chart_div4'));
+          chart1.draw(data1, options);
+          chart2.draw(data2, options);
+          chart3.draw(data3, options);
+          chart4.draw(data4, options);
+        }
+        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawLineColors);
+        /*LINE CHART START*/
+        function drawLineColors() {
 
-
-           google.charts.load('current', {packages: ['corechart', 'line']});
-     google.charts.setOnLoadCallback(drawLineColors);
-
-    /*LINE CHART START*/
-    function drawLineColors() {
-                 
-      len = obj.length;
-
-                  /* Draw line chart in every Trend box */
-                  for (var i = 0; i < len; i++) {
-
-                      temp = i + 1;
-                      console.log(temp);
-                      var trend_array = $("#trend" + temp).val().split(",");
-
-                      if (trend_array[0] != "No Data") {
-
-
-                          var data = new google.visualization.DataTable();
-                          data.addColumn('number', 'X');
-                          data.addColumn('number', 'Score');
-
-                          data_row = "[";
-                          /*create the string*/
-
-
-                          for (var j = 0; j < trend_array.length; j++) {
-                              data_row = data_row + "[" + j + "," + trend_array[j] + "],"
+          len = obj.length;
+          /* Draw line chart in every Trend box */
+          for (var i = 0; i < len; i++) {
+            temp = i + 1;
+            console.log(temp);
+            var trend_array = $("#trend" + temp).val().split(",");
+            if (trend_array[0] != "No Data") {
+              var data = new google.visualization.DataTable();
+              data.addColumn('number', 'X');
+              data.addColumn('number', 'Score');
+              data_row = "[";
+              /*create the string*/
+              for (var j = 0; j < trend_array.length; j++) {
+                data_row = data_row + "[" + j + "," + trend_array[j] + "],"
                               // data.addRow([i,JSON.stringify(trend_array[i]]);
-                          };
-
-                          data_row = data_row.slice(0, -1) + "]";
-                          data.addRows(JSON.parse(data_row));
-
-                          var options = {
+                            };
+                            data_row = data_row.slice(0, -1) + "]";
+                            data.addRows(JSON.parse(data_row));
+                            var options = {
                              hAxis: {
-                                  title: '',
-                                  gridlines: {color: 'none'},
-                                  baselineColor: 'none'
-                              },
-                              vAxis: {
-                                  title: '',
-                                  gridlines: {color: 'none'},
-                                  baselineColor: 'none'
-                              },
-                              colors: ['#a52714', '#097138'],
-                              crosshair: {
-                                  color: '#000',
-                                  trigger: 'selection'
-                              },
-                              chartArea: {
-                                  left: 20,
-                                  top: '0%',
-                                  width: '150%',
-                                  height: '250%'
-                              }
+                              title: '',
+                              gridlines: {color: 'none'},
+                              baselineColor: 'none'
+                            },
+                            vAxis: {
+                              title: '',
+                              gridlines: {color: 'none'},
+                              baselineColor: 'none'
+                            },
+                            colors: ['#a52714', '#097138'],
+                            crosshair: {
+                              color: '#000',
+                              trigger: 'selection'
+                            },
+                            chartArea: {
+                              left: 20,
+                              top: '0%',
+                              width: '150%',
+                              height: '250%'
+                            }
                           };
                           var chart = new google.visualization.LineChart(document.getElementById('trend' + temp));
                           chart.draw(data, options);
-                      } else {
-
+                        } else {
                           $("#trend" + temp).text("No Data");
                       } //if loop end
-
                   }; //for loop end;
-        
-} /*LINE CHART function end*/
 
-        });
-        
+                } /*LINE CHART function end*/
+              });
+
         //if R returns an error, alert the error message
         req.fail(function(){
           alert("Server error: " + req.responseText);
@@ -172,81 +157,63 @@
         req.always(function(){
           $("#submitbutton").removeAttr("disabled")
         });
-      });
-      
-     
-    });
-    </script>
-    
+      }
+
+      $("#submitbutton").on("click", fetchScore);
+
+
+});
+</script>
+
 <link rel="stylesheet" href="table.css">
-    <link rel="stylesheet" href="jquery-ui.css">
-  </head>
-    
-  <body>
-    <h1>Customer Score</h1>
-      <button id="submitbutton" type="button">Get Your Score!</button>
-    <p>Date: <input type="text" id="datepicker"></p>
-        <p id="output"></p>
+<link rel="stylesheet" href="jquery-ui.css">
+</head>
+
+<body>
+  <h1>Customer Score</h1>
+  <button id="submitbutton" type="button">Get Your Score!</button>
+  <p>Date: <input type="text" id="datepicker"></p>
+  <p id="output"></p>
   <table >
-  <thead>
+    <thead>
       <tr>
         <th style="text-align:center;">Portfolio Success Score</th>
       </tr>
-  </thead>
+    </thead>
   </br>
   <tbody>
     <td style="width:470px;"><div id="chart_div4" style="margin-left:170px;"></div></td>
   </tbody>
- </table>
-  <table cellspacing='0'>
-
-   <thead>
-
+</table>
+<table cellspacing='0'>
+ <thead>
+  <tr>
+    <th>Portfolio Fit Score</th>
+    <th>Portfolio Health Score</th>
+    <th>Portfolio Value Score</th>
+  </tr>
+</thead>
+<br/>
+<tbody>
+  <tr>
+    <td style="width: 100px; padding-left:400;border:none;"><div id="chart_div1" ></div></td>
+    <td style="width: 100px; height: 120px;padding-left:300;"><div id="chart_div2" ></div></td>
+    <td style="width: 100px; height: 120px;padding-left:300;"><div id="chart_div3" ></div></td>
     <tr>
-      
-      <th>Portfolio Fit Score</th>
-      <th>Portfolio Health Score</th>
-      <th>Portfolio Value Score</th>
-      
-      
-    </tr>
-  
-
- </thead>
- <br/>
-
-
-
-
-
-
- <tbody>
-
-    <tr>
-      <td style="width: 100px; padding-left:400;border:none;"><div id="chart_div1" ></div></td>
-      <td style="width: 100px; height: 120px;padding-left:300;"><div id="chart_div2" ></div></td>
-      <td style="width: 100px; height: 120px;padding-left:300;"><div id="chart_div3" ></div></td>
-      
-     <tr>
-      
-
-      
     </tr><!-- Table Row -->
   </tbody>
 </table>
 
 
-      <p id="avgfit" style="display:none;"></p>
-      <p id="avghealth" type="hidden"></p>
-      <p id="avgvalue" type="hidden"></p>
-      <p id="avgsuccess" type="hidden"></p>
+<p id="avgfit" style="display:none;"></p>
+<p id="avghealth" type="hidden"></p>
+<p id="avgvalue" type="hidden"></p>
+<p id="avgsuccess" type="hidden"></p>
 <br/>
 <br/>
-    <table cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
+<table cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
 
   <!-- Table Header -->
-
-
   <thead>
     <tr>
       <th>Customer Name</th>
@@ -265,7 +232,7 @@
   <!-- Table Body -->
   <tbody>
 
-        <tr>
+    <tr>
      <tr>
       <td id="customer1"></td>
       <td id="fit1"></td>
@@ -349,7 +316,7 @@
       <td id="insight7"></td>
       <td id="play7"></td>
     </tr>
-<tr class="even">
+    <tr class="even">
       <td id="customer8"></td>
       <td id="fit8"></td>
       <td id="health8"></td>
@@ -388,11 +355,7 @@
   <!-- Table Body -->
 
 </table>
-    <br />
+<br />
 
-    
-    
-   
-    
-  </body>
+</body>
 </html>
