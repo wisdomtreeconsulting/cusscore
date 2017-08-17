@@ -63,7 +63,7 @@ tryCatch({
 }, finally = {
 
 })
-
+date <- "07/01/2017"
    d <- as.Date( as.character(date), "%m/%d/%Y")
    date <-  format(d, "%d/%m/%Y")
 
