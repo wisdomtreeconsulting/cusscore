@@ -107,5 +107,15 @@ final_output <- merge(final_output, trend_scores, by = "CustomerID",all.x = TRUE
 
 final_output$Trend_Scores<- ifelse(!is.na(final_output$Trend_Scores)>0, final_output$Trend_Scores,"No Data")
 
-return(toJSON(final_output[ order(-final_output[,6], final_output[,6]), ]))
+portfolio_fit <- mean(final_output$FIT)
+portfolio_health <- mean(final_output$HEALTH)
+portfolio_value <- mean(final_output$VALUE)
+portfolio_success <- mean(final_output$SUCCESS_SCORES)
+
+portfolio_scores <- data.frame(cbind(portfolio_fit,portfolio_health,portfolio_value, portfolio_success))
+
+
+cust_scores <- data.frame(round(portfolio_scores),final_output[ order(-final_output[,6], final_output[,6]),])
+
+return(toJSON(cust_scores[ order(-cust_scores[,10], cust_scores[,10]),]))
 }
