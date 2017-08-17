@@ -50,7 +50,8 @@ calculate_score <- function(date){
 library(jsonlite)
 library(mongolite)
 
-customerCollection <- mongo(collection = "cusscore", db="local")
+#customerCollection <- mongo(collection = "cusscore", db="local")
+ customerCollection <- mongo(collection = "customer_score", db="local")
 
 tryCatch({
 #  customerCollection$insert(final_scores)
