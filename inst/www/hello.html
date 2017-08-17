@@ -159,6 +159,9 @@ function fetchScore(){
         });
       }
 
+$(window).bind("load", function() {
+    $("#datepicker").text("07/01/2017");
+});
       $("#submitbutton").on("click", fetchScore);
 
 
